@@ -1,0 +1,1212 @@
+{
+  "races": [
+    {
+      "race_id": "20260320_KW_01",
+      "race_date": "2026-03-20",
+      "race_number": 1,
+      "distance": 900,
+      "track_condition": "good",
+      "grade": "C3",
+      "num_runners": 9,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R01-Uma1",
+          "odds_win": 2.5,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R01-Uma2",
+          "odds_win": 3.0,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R01-Uma3",
+          "odds_win": 3.5,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R01-Uma4",
+          "odds_win": 4.0,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R01-Uma5",
+          "odds_win": 4.5,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R01-Uma6",
+          "odds_win": 5.0,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R01-Uma7",
+          "odds_win": 5.5,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R01-Uma8",
+          "odds_win": 6.0,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R01-Uma9",
+          "odds_win": 6.5,
+          "popularity": 9
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_02",
+      "race_date": "2026-03-20",
+      "race_number": 2,
+      "distance": 1400,
+      "track_condition": "good",
+      "grade": "B2",
+      "num_runners": 10,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R02-Uma1",
+          "odds_win": 2.6,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R02-Uma2",
+          "odds_win": 3.1,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R02-Uma3",
+          "odds_win": 3.6,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R02-Uma4",
+          "odds_win": 4.1,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R02-Uma5",
+          "odds_win": 4.6,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R02-Uma6",
+          "odds_win": 5.1,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R02-Uma7",
+          "odds_win": 5.6,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R02-Uma8",
+          "odds_win": 6.1,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R02-Uma9",
+          "odds_win": 6.6,
+          "popularity": 9
+        },
+        {
+          "horse_number": 10,
+          "horse_name": "R02-Uma10",
+          "odds_win": 7.1,
+          "popularity": 10
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        },
+        {
+          "horse_number": 10,
+          "finish_position": 10,
+          "corner_positions": "10-10-10"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_03",
+      "race_date": "2026-03-20",
+      "race_number": 3,
+      "distance": 1500,
+      "track_condition": "slightly_heavy",
+      "grade": "B1",
+      "num_runners": 9,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R03-Uma1",
+          "odds_win": 2.7,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R03-Uma2",
+          "odds_win": 3.2,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R03-Uma3",
+          "odds_win": 3.7,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R03-Uma4",
+          "odds_win": 4.2,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R03-Uma5",
+          "odds_win": 4.7,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R03-Uma6",
+          "odds_win": 5.2,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R03-Uma7",
+          "odds_win": 5.7,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R03-Uma8",
+          "odds_win": 6.2,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R03-Uma9",
+          "odds_win": 6.7,
+          "popularity": 9
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_04",
+      "race_date": "2026-03-20",
+      "race_number": 4,
+      "distance": 1600,
+      "track_condition": "good",
+      "grade": "A2",
+      "num_runners": 10,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R04-Uma1",
+          "odds_win": 2.8,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R04-Uma2",
+          "odds_win": 3.3,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R04-Uma3",
+          "odds_win": 3.8,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R04-Uma4",
+          "odds_win": 4.3,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R04-Uma5",
+          "odds_win": 4.8,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R04-Uma6",
+          "odds_win": 5.3,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R04-Uma7",
+          "odds_win": 5.8,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R04-Uma8",
+          "odds_win": 6.3,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R04-Uma9",
+          "odds_win": 6.8,
+          "popularity": 9
+        },
+        {
+          "horse_number": 10,
+          "horse_name": "R04-Uma10",
+          "odds_win": 7.3,
+          "popularity": 10
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        },
+        {
+          "horse_number": 10,
+          "finish_position": 10,
+          "corner_positions": "10-10-10"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_05",
+      "race_date": "2026-03-20",
+      "race_number": 5,
+      "distance": 2000,
+      "track_condition": "good",
+      "grade": "C2",
+      "num_runners": 10,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R05-Uma1",
+          "odds_win": 2.9,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R05-Uma2",
+          "odds_win": 3.4,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R05-Uma3",
+          "odds_win": 3.9,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R05-Uma4",
+          "odds_win": 4.4,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R05-Uma5",
+          "odds_win": 4.9,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R05-Uma6",
+          "odds_win": 5.4,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R05-Uma7",
+          "odds_win": 5.9,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R05-Uma8",
+          "odds_win": 6.4,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R05-Uma9",
+          "odds_win": 6.9,
+          "popularity": 9
+        },
+        {
+          "horse_number": 10,
+          "horse_name": "R05-Uma10",
+          "odds_win": 7.4,
+          "popularity": 10
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        },
+        {
+          "horse_number": 10,
+          "finish_position": 10,
+          "corner_positions": "10-10-10"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_06",
+      "race_date": "2026-03-20",
+      "race_number": 6,
+      "distance": 900,
+      "track_condition": "heavy",
+      "grade": "C1",
+      "num_runners": 10,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R06-Uma1",
+          "odds_win": 3.0,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R06-Uma2",
+          "odds_win": 3.5,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R06-Uma3",
+          "odds_win": 4.0,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R06-Uma4",
+          "odds_win": 4.5,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R06-Uma5",
+          "odds_win": 5.0,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R06-Uma6",
+          "odds_win": 5.5,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R06-Uma7",
+          "odds_win": 6.0,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R06-Uma8",
+          "odds_win": 6.5,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R06-Uma9",
+          "odds_win": 7.0,
+          "popularity": 9
+        },
+        {
+          "horse_number": 10,
+          "horse_name": "R06-Uma10",
+          "odds_win": 7.5,
+          "popularity": 10
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        },
+        {
+          "horse_number": 10,
+          "finish_position": 10,
+          "corner_positions": "10-10-10"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_07",
+      "race_date": "2026-03-20",
+      "race_number": 7,
+      "distance": 1400,
+      "track_condition": "good",
+      "grade": "B3",
+      "num_runners": 10,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "KW07-Uma1",
+          "odds_win": 8.0,
+          "popularity": 3
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "KW07-Uma2",
+          "odds_win": 2.1,
+          "popularity": 1
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "KW07-Uma3",
+          "odds_win": 12.0,
+          "popularity": 4
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "KW07-Uma4",
+          "odds_win": 5.5,
+          "popularity": 2
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "KW07-Uma5",
+          "odds_win": 15.0,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "KW07-Uma6",
+          "odds_win": 18.0,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "KW07-Uma7",
+          "odds_win": 22.0,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "KW07-Uma8",
+          "odds_win": 35.0,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "KW07-Uma9",
+          "odds_win": 45.0,
+          "popularity": 9
+        },
+        {
+          "horse_number": 10,
+          "horse_name": "KW07-Uma10",
+          "odds_win": 55.0,
+          "popularity": 10
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 4,
+          "corner_positions": "4-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 5,
+          "corner_positions": "5-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 6,
+          "corner_positions": "6-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 7,
+          "corner_positions": "7-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 8,
+          "corner_positions": "8-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 9,
+          "corner_positions": "9-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 10,
+          "corner_positions": "10-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 1,
+          "corner_positions": "1-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 2,
+          "corner_positions": "2-9-9"
+        },
+        {
+          "horse_number": 10,
+          "finish_position": 3,
+          "corner_positions": "3-10-10"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_08",
+      "race_date": "2026-03-20",
+      "race_number": 8,
+      "distance": 1500,
+      "track_condition": "good",
+      "grade": "B2",
+      "num_runners": 10,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R08-Uma1",
+          "odds_win": 3.2,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R08-Uma2",
+          "odds_win": 3.7,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R08-Uma3",
+          "odds_win": 4.2,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R08-Uma4",
+          "odds_win": 4.7,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R08-Uma5",
+          "odds_win": 5.2,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R08-Uma6",
+          "odds_win": 5.7,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R08-Uma7",
+          "odds_win": 6.2,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R08-Uma8",
+          "odds_win": 6.7,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R08-Uma9",
+          "odds_win": 7.2,
+          "popularity": 9
+        },
+        {
+          "horse_number": 10,
+          "horse_name": "R08-Uma10",
+          "odds_win": 7.7,
+          "popularity": 10
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        },
+        {
+          "horse_number": 10,
+          "finish_position": 10,
+          "corner_positions": "10-10-10"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_09",
+      "race_date": "2026-03-20",
+      "race_number": 9,
+      "distance": 1600,
+      "track_condition": "slightly_heavy",
+      "grade": "A1",
+      "num_runners": 10,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R09-Uma1",
+          "odds_win": 3.3,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R09-Uma2",
+          "odds_win": 3.8,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R09-Uma3",
+          "odds_win": 4.3,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R09-Uma4",
+          "odds_win": 4.8,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R09-Uma5",
+          "odds_win": 5.3,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R09-Uma6",
+          "odds_win": 5.8,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R09-Uma7",
+          "odds_win": 6.3,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R09-Uma8",
+          "odds_win": 6.8,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R09-Uma9",
+          "odds_win": 7.3,
+          "popularity": 9
+        },
+        {
+          "horse_number": 10,
+          "horse_name": "R09-Uma10",
+          "odds_win": 7.8,
+          "popularity": 10
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        },
+        {
+          "horse_number": 10,
+          "finish_position": 10,
+          "corner_positions": "10-10-10"
+        }
+      ]
+    },
+    {
+      "race_id": "20260320_KW_10",
+      "race_date": "2026-03-20",
+      "race_number": 10,
+      "distance": 2000,
+      "track_condition": "good",
+      "grade": "B1",
+      "num_runners": 10,
+      "entries": [
+        {
+          "horse_number": 1,
+          "horse_name": "R10-Uma1",
+          "odds_win": 3.4,
+          "popularity": 1
+        },
+        {
+          "horse_number": 2,
+          "horse_name": "R10-Uma2",
+          "odds_win": 3.9,
+          "popularity": 2
+        },
+        {
+          "horse_number": 3,
+          "horse_name": "R10-Uma3",
+          "odds_win": 4.4,
+          "popularity": 3
+        },
+        {
+          "horse_number": 4,
+          "horse_name": "R10-Uma4",
+          "odds_win": 4.9,
+          "popularity": 4
+        },
+        {
+          "horse_number": 5,
+          "horse_name": "R10-Uma5",
+          "odds_win": 5.4,
+          "popularity": 5
+        },
+        {
+          "horse_number": 6,
+          "horse_name": "R10-Uma6",
+          "odds_win": 5.9,
+          "popularity": 6
+        },
+        {
+          "horse_number": 7,
+          "horse_name": "R10-Uma7",
+          "odds_win": 6.4,
+          "popularity": 7
+        },
+        {
+          "horse_number": 8,
+          "horse_name": "R10-Uma8",
+          "odds_win": 6.9,
+          "popularity": 8
+        },
+        {
+          "horse_number": 9,
+          "horse_name": "R10-Uma9",
+          "odds_win": 7.4,
+          "popularity": 9
+        },
+        {
+          "horse_number": 10,
+          "horse_name": "R10-Uma10",
+          "odds_win": 7.9,
+          "popularity": 10
+        }
+      ],
+      "results": [
+        {
+          "horse_number": 1,
+          "finish_position": 1,
+          "corner_positions": "1-1-1"
+        },
+        {
+          "horse_number": 2,
+          "finish_position": 2,
+          "corner_positions": "2-2-2"
+        },
+        {
+          "horse_number": 3,
+          "finish_position": 3,
+          "corner_positions": "3-3-3"
+        },
+        {
+          "horse_number": 4,
+          "finish_position": 4,
+          "corner_positions": "4-4-4"
+        },
+        {
+          "horse_number": 5,
+          "finish_position": 5,
+          "corner_positions": "5-5-5"
+        },
+        {
+          "horse_number": 6,
+          "finish_position": 6,
+          "corner_positions": "6-6-6"
+        },
+        {
+          "horse_number": 7,
+          "finish_position": 7,
+          "corner_positions": "7-7-7"
+        },
+        {
+          "horse_number": 8,
+          "finish_position": 8,
+          "corner_positions": "8-8-8"
+        },
+        {
+          "horse_number": 9,
+          "finish_position": 9,
+          "corner_positions": "9-9-9"
+        },
+        {
+          "horse_number": 10,
+          "finish_position": 10,
+          "corner_positions": "10-10-10"
+        }
+      ]
+    }
+  ]
+}
