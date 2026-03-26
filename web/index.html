@@ -1,368 +1,331 @@
 <!DOCTYPE html>
-<html lang="ja" class="dark">
+<html lang="ja">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>川崎競馬AI Dashboard</title>
+  <title>川崎競馬AI</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.5/dist/cdn.min.js"></script>
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            surface: '#1a1a2e',
-            card: '#16213e',
-            accent: '#0f3460',
-            highlight: '#e94560',
-            success: '#10b981',
-            warning: '#f59e0b',
-            danger: '#ef4444',
-          }
-        }
-      }
-    }
-  </script>
   <style>
-    body { font-family: 'Segoe UI', 'Hiragino Sans', sans-serif; }
-    .fade-in { animation: fadeIn 0.3s ease-in; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+    body { font-family: -apple-system, 'Hiragino Sans', 'Meiryo', sans-serif; background: #0f172a; color: #e2e8f0; }
+    .glass { background: rgba(30,41,59,.85); backdrop-filter: blur(8px); border: 1px solid rgba(100,116,139,.25); }
+    .card:hover { border-color: rgba(59,130,246,.5); }
+    .medal-1 { color: #fbbf24; } .medal-2 { color: #94a3b8; } .medal-3 { color: #b45309; }
+    .edge-pos { color: #34d399; } .edge-neg { color: #f87171; }
+    .tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 600; }
+    .tag-bet { background: #065f46; color: #6ee7b7; } .tag-nobet { background: #1e293b; color: #94a3b8; }
+    .tag-veto { background: #7f1d1d; color: #fca5a5; }
+    .tag-good { background: #14532d; color: #86efac; } .tag-neutral { background: #1e293b; color: #cbd5e1; } .tag-bad { background: #7f1d1d; color: #fca5a5; }
+    .scroll-x { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+    tr:hover td { background: rgba(59,130,246,.08); }
+    .fade { animation: fade .25s ease; }
+    @keyframes fade { from { opacity: 0; } to { opacity: 1; } }
   </style>
 </head>
-<body class="bg-surface text-gray-200 min-h-screen">
+<body>
 
-<noscript>
-  <div style="padding:1rem;background:#1a1a2e;color:#e5e7eb;font-family:sans-serif;">
-    このダッシュボードは JavaScript が必要です。ブラウザで JavaScript を有効にしてください。
-  </div>
-</noscript>
+<div x-data="app()" x-init="init()">
 
-<div x-data="dashboard()" x-init="init()">
-
-  <!-- Header -->
-  <header class="bg-card border-b border-gray-700 px-6 py-4">
-    <div class="max-w-7xl mx-auto flex items-center justify-between">
-      <div>
-        <h1 class="text-xl font-bold text-white">川崎競馬 AI Dashboard</h1>
-        <p class="text-sm text-gray-400">多層意思決定システム — 判断根拠の可視化</p>
+  <!-- ヘッダー -->
+  <header class="sticky top-0 z-50 glass border-b border-slate-700/50">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <span class="text-lg font-bold text-white">🏇 川崎競馬AI</span>
+        <span class="text-xs text-slate-400" x-text="summary.today || ''"></span>
       </div>
-      <div class="flex items-center gap-4">
-        <span x-show="loading" class="text-sm text-gray-400">読込中...</span>
-        <span x-show="apiError" class="text-sm text-red-400 max-w-md truncate" x-text="apiError" title=""></span>
-        <button @click="refresh()" class="px-3 py-1 bg-accent text-sm rounded hover:bg-blue-700 transition">
-          更新
-        </button>
-        <span class="text-xs text-gray-500" x-text="lastUpdated"></span>
+      <div class="flex items-center gap-3">
+        <template x-for="t in tabs" :key="t.id">
+          <button @click="tab=t.id" class="px-3 py-1.5 text-xs rounded-md transition"
+            :class="tab===t.id ? 'bg-blue-600 text-white' : 'text-slate-400 hover:text-white hover:bg-slate-700'"
+            x-text="t.label"></button>
+        </template>
+        <button @click="refresh()" class="ml-2 px-2 py-1 text-xs rounded bg-slate-700 hover:bg-slate-600 text-slate-300">↻</button>
       </div>
     </div>
   </header>
 
-  <!-- Navigation -->
-  <nav class="bg-card/50 border-b border-gray-800">
-    <div class="max-w-7xl mx-auto flex gap-1 px-6">
-      <template x-for="tab in ['dashboard', 'races', 'advisory', 'analytics']">
-        <button
-          @click="currentTab = tab"
-          :class="currentTab === tab ? 'bg-accent text-white' : 'text-gray-400 hover:text-white'"
-          class="px-4 py-2 text-sm rounded-t transition"
-          x-text="tabNames[tab]">
-        </button>
-      </template>
-    </div>
-  </nav>
+  <main class="max-w-7xl mx-auto px-4 py-5">
 
-  <main class="max-w-7xl mx-auto px-6 py-6">
-
-    <!-- Dashboard Tab -->
-    <div x-show="currentTab === 'dashboard'" class="fade-in">
-      <!-- Summary Cards -->
-      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-6">
-        <div class="bg-card rounded-lg p-4 border border-gray-700">
-          <div class="text-xs text-gray-400 mb-1">全レース</div>
-          <div class="text-2xl font-bold" x-text="summary.total_races || '-'"></div>
+    <!-- ━━━ ダッシュボード ━━━ -->
+    <section x-show="tab==='dash'" class="fade">
+      <!-- KPI カード -->
+      <div class="grid grid-cols-3 sm:grid-cols-6 gap-3 mb-5">
+        <div class="glass rounded-lg p-3 text-center">
+          <div class="text-[10px] text-slate-400 uppercase tracking-wider">レース</div>
+          <div class="text-2xl font-bold text-white" x-text="summary.total_races||0"></div>
         </div>
-        <div class="bg-card rounded-lg p-4 border border-gray-700">
-          <div class="text-xs text-gray-400 mb-1">予想済</div>
-          <div class="text-2xl font-bold text-blue-400" x-text="summary.predicted || '-'"></div>
+        <div class="glass rounded-lg p-3 text-center">
+          <div class="text-[10px] text-slate-400 uppercase tracking-wider">Bet</div>
+          <div class="text-2xl font-bold text-emerald-400" x-text="summary.bet_count||0"></div>
         </div>
-        <div class="bg-card rounded-lg p-4 border border-green-900 border-l-4 border-l-success">
-          <div class="text-xs text-gray-400 mb-1">bet</div>
-          <div class="text-2xl font-bold text-success" x-text="summary.bet_count || '0'"></div>
+        <div class="glass rounded-lg p-3 text-center">
+          <div class="text-[10px] text-slate-400 uppercase tracking-wider">No-bet</div>
+          <div class="text-2xl font-bold text-slate-400" x-text="summary.no_bet_count||0"></div>
         </div>
-        <div class="bg-card rounded-lg p-4 border border-gray-700 border-l-4 border-l-gray-500">
-          <div class="text-xs text-gray-400 mb-1">no-bet</div>
-          <div class="text-2xl font-bold" x-text="summary.no_bet_count || '0'"></div>
+        <div class="glass rounded-lg p-3 text-center">
+          <div class="text-[10px] text-slate-400 uppercase tracking-wider">1番人気勝率</div>
+          <div class="text-2xl font-bold text-amber-400" x-text="((summary.baseline_fav_win_rate||0)*100).toFixed(0)+'%'"></div>
         </div>
-        <div class="bg-card rounded-lg p-4 border border-orange-900 border-l-4 border-l-warning">
-          <div class="text-xs text-gray-400 mb-1">危険人気馬</div>
-          <div class="text-2xl font-bold text-warning" x-text="summary.danger_popular_count || '0'"></div>
+        <div class="glass rounded-lg p-3 text-center">
+          <div class="text-[10px] text-slate-400 uppercase tracking-wider">Bias セル</div>
+          <div class="text-2xl font-bold text-blue-400" x-text="summary.bias_cells||0"></div>
         </div>
-        <div class="bg-card rounded-lg p-4 border border-gray-700"
-             :class="{'border-l-4 border-l-success': summary.system_status?.alert_level === 'NORMAL',
-                       'border-l-4 border-l-warning': summary.system_status?.alert_level === 'CAUTION',
-                       'border-l-4 border-l-danger': summary.system_status?.alert_level === 'HALT'}">
-          <div class="text-xs text-gray-400 mb-1">システム</div>
-          <div class="text-lg font-bold" x-text="summary.system_status?.alert_level || '-'"></div>
+        <div class="glass rounded-lg p-3 text-center">
+          <div class="text-[10px] text-slate-400 uppercase tracking-wider">Status</div>
+          <div class="text-lg font-bold" :class="summary.system_status?.alert_level==='NORMAL'?'text-emerald-400':'text-red-400'"
+            x-text="summary.system_status?.alert_level||'-'"></div>
         </div>
       </div>
 
-      <!-- ROI Summary -->
-      <div class="bg-card rounded-lg p-4 border border-gray-700 mb-6">
-        <h3 class="text-sm font-semibold text-gray-300 mb-2">ROI サマリ</h3>
-        <div class="flex gap-8 text-sm">
-          <div>全体ROI: <span class="font-mono text-white" x-text="summary.system_status?.roi_overall || '-'"></span></div>
-          <div>直近30: <span class="font-mono text-white" x-text="summary.system_status?.roi_recent_30 || '-'"></span></div>
-          <div>連敗: <span class="font-mono" :class="(summary.system_status?.consecutive_losses || 0) >= 7 ? 'text-danger' : 'text-white'" x-text="summary.system_status?.consecutive_losses || '0'"></span></div>
+      <!-- サブシステム -->
+      <div class="glass rounded-lg p-4 mb-5">
+        <h3 class="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">サブシステム</h3>
+        <div class="flex flex-wrap gap-2">
+          <template x-for="(mode, name) in summary.subsystem_modes||{}" :key="name">
+            <span class="tag" :class="{
+              'bg-emerald-900/60 text-emerald-300': mode==='active',
+              'bg-blue-900/60 text-blue-300': mode==='advisory',
+              'bg-amber-900/60 text-amber-300': mode==='waiting_data',
+              'bg-slate-800 text-slate-500': mode==='off'||mode==='discard_recommended'
+            }"><span x-text="name"></span> <span class="opacity-60" x-text="mode"></span></span>
+          </template>
         </div>
       </div>
 
-      <!-- Subsystem Modes -->
-      <div class="bg-card rounded-lg p-4 border border-gray-700">
-        <h3 class="text-sm font-semibold text-gray-300 mb-3">サブシステム状態</h3>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-          <template x-for="(mode, name) in summary.subsystem_modes || {}">
-            <div class="flex items-center gap-2 text-sm">
-              <span class="w-2 h-2 rounded-full"
-                    :class="{'bg-success': mode === 'active',
-                             'bg-blue-400': mode === 'advisory',
-                             'bg-yellow-400': mode === 'waiting_data',
-                             'bg-gray-500': mode === 'off',
-                             'bg-red-400': mode === 'discard_recommended'}"></span>
-              <span class="text-gray-400" x-text="name"></span>
-              <span class="text-xs px-1 rounded"
-                    :class="{'bg-green-900 text-green-300': mode === 'active',
-                             'bg-blue-900 text-blue-300': mode === 'advisory',
-                             'bg-yellow-900 text-yellow-300': mode === 'waiting_data',
-                             'bg-gray-800 text-gray-400': mode === 'off',
-                             'bg-red-900 text-red-300': mode === 'discard_recommended'}"
-                    x-text="mode"></span>
+      <!-- Advisory -->
+      <div class="glass rounded-lg p-4" x-show="summary.advisory_modules">
+        <h3 class="text-xs font-semibold text-slate-400 mb-3 uppercase tracking-wider">Advisory（参考情報・Gate未使用）</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+          <template x-for="(v,k) in summary.advisory_modules||{}" :key="k">
+            <div class="bg-slate-800/50 rounded p-3">
+              <div class="text-xs text-slate-400 mb-1" x-text="k"></div>
+              <div class="text-sm text-white" x-text="v.short_reason||'-'"></div>
+              <div class="text-[10px] text-slate-500 mt-1" x-text="'conf: '+(v.confidence||0)"></div>
             </div>
           </template>
         </div>
       </div>
-    </div>
+    </section>
 
-    <!-- Races Tab -->
-    <div x-show="currentTab === 'races'" class="fade-in">
-      <h2 class="text-lg font-semibold mb-4">レース一覧</h2>
+    <!-- ━━━ レース一覧 ━━━ -->
+    <section x-show="tab==='races'" class="fade">
+      <!-- フィルタ -->
+      <div class="flex gap-2 mb-4 flex-wrap items-center">
+        <input type="text" x-model="raceFilter" placeholder="距離・グレードで絞込"
+          class="bg-slate-800 border border-slate-600 rounded px-3 py-1.5 text-sm text-white w-48 focus:border-blue-500 focus:outline-none">
+        <span class="text-xs text-slate-400" x-text="filteredRaces.length+' / '+races.length+' レース'"></span>
+      </div>
+
       <div class="space-y-2">
-        <template x-for="race in races">
-          <div @click="selectRace(race.race_id)"
-               class="bg-card rounded-lg p-4 border border-gray-700 cursor-pointer hover:border-blue-500 transition"
-               :class="{'border-l-4 border-l-success': race.gate_decision === 'bet',
-                         'border-l-4 border-l-gray-500': race.gate_decision === 'no_bet'}">
+        <template x-for="r in filteredRaces.slice(racePage*pageSize, (racePage+1)*pageSize)" :key="r.race_id">
+          <div @click="selectRace(r.race_id)" class="glass rounded-lg p-3 cursor-pointer card transition">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-3">
-                <span class="text-lg font-bold text-white" x-text="'R' + race.race_number"></span>
-                <span class="text-sm text-gray-400" x-text="race.grade + ' ' + race.distance + 'm'"></span>
-                <span class="text-sm text-gray-400" x-text="race.num_runners + '頭'"></span>
+                <span class="text-base font-bold text-white w-10" x-text="'R'+r.race_number"></span>
+                <span class="text-xs px-1.5 py-0.5 rounded bg-slate-700 text-slate-300" x-text="r.grade"></span>
+                <span class="text-xs text-slate-400" x-text="r.distance+'m'"></span>
+                <span class="text-xs text-slate-500" x-text="r.num_runners+'頭'"></span>
+                <span class="text-xs text-slate-500" x-text="r.condition"></span>
               </div>
-              <div class="flex items-center gap-3">
-                <span class="text-xs px-2 py-1 rounded font-mono"
-                      :class="race.gate_decision === 'bet' ? 'bg-green-900 text-green-300' : 'bg-gray-800 text-gray-400'"
-                      x-text="race.gate_decision"></span>
-                <span class="text-sm text-gray-300" x-text="race.short_reason"></span>
+              <div class="flex items-center gap-2">
+                <span class="tag" :class="r.gate_decision==='bet'?'tag-bet':'tag-nobet'" x-text="r.gate_decision"></span>
+                <span class="text-xs text-slate-400 max-w-48 truncate" x-text="r.short_reason"></span>
               </div>
             </div>
           </div>
         </template>
       </div>
 
-      <!-- Race Detail -->
-      <template x-if="selectedRace">
-        <div class="mt-6 bg-card rounded-lg border border-blue-800 fade-in">
-          <div class="p-4 border-b border-gray-700">
-            <h3 class="text-lg font-bold" x-text="'R' + selectedRace.race_number + '  ' + selectedRace.distance + 'm  ' + selectedRace.grade"></h3>
-            <!-- Decision Banner -->
-            <div class="mt-3 p-3 rounded"
-                 :class="selectedRace.decision?.gate_decision === 'bet' ? 'bg-green-900/30 border border-green-800' : 'bg-gray-800 border border-gray-600'">
-              <div class="text-sm font-semibold" x-text="'判定: ' + (selectedRace.decision?.gate_decision || '-')"></div>
-              <div class="text-sm text-yellow-300 mt-1" x-text="'決定要因: ' + (selectedRace.decision?.decisive_factor || '-')"></div>
-              <div class="text-xs text-gray-400 mt-1" x-text="'仮想判定: ' + (selectedRace.decision?.counterfactual || '-')"></div>
+      <!-- ページネーション -->
+      <div class="flex justify-center gap-2 mt-4" x-show="filteredRaces.length > pageSize">
+        <button @click="racePage=Math.max(0,racePage-1)" class="px-3 py-1 text-xs rounded bg-slate-700 hover:bg-slate-600" :disabled="racePage===0">← 前</button>
+        <span class="text-xs text-slate-400 py-1" x-text="(racePage+1)+' / '+Math.ceil(filteredRaces.length/pageSize)"></span>
+        <button @click="racePage=Math.min(Math.ceil(filteredRaces.length/pageSize)-1,racePage+1)" class="px-3 py-1 text-xs rounded bg-slate-700 hover:bg-slate-600">次 →</button>
+      </div>
+
+      <!-- レース詳細 -->
+      <template x-if="detail">
+        <div class="mt-5 glass rounded-lg fade" id="race-detail">
+          <!-- ヘッダー -->
+          <div class="p-4 border-b border-slate-700/50">
+            <div class="flex items-center gap-3 mb-2">
+              <span class="text-xl font-bold text-white" x-text="'R'+detail.race_number"></span>
+              <span class="tag bg-slate-700 text-slate-300" x-text="detail.grade"></span>
+              <span class="text-sm text-slate-300" x-text="detail.distance+'m'"></span>
+              <span class="text-sm text-slate-400" x-text="detail.condition"></span>
+              <span class="text-sm text-slate-500" x-text="detail.num_runners+'頭'"></span>
+            </div>
+            <!-- 判定バナー -->
+            <div class="rounded-md p-3 mt-2" :class="detail.decision?.gate_decision==='bet'?'bg-emerald-900/30 border border-emerald-800':'bg-slate-800/80 border border-slate-600'">
+              <div class="flex items-center gap-2">
+                <span class="tag" :class="detail.decision?.gate_decision==='bet'?'tag-bet':'tag-nobet'" x-text="detail.decision?.gate_decision||'-'"></span>
+                <span class="text-sm text-amber-300" x-text="detail.decision?.decisive_factor||''"></span>
+              </div>
+              <div class="text-xs text-slate-400 mt-1" x-show="detail.decision?.counterfactual" x-text="'↳ '+detail.decision?.counterfactual"></div>
             </div>
           </div>
-          <!-- Horse Table -->
-          <div class="overflow-x-auto">
+
+          <!-- 出走馬テーブル -->
+          <div class="scroll-x">
             <table class="w-full text-sm">
-              <thead class="text-xs text-gray-400 border-b border-gray-700">
-                <tr>
+              <thead>
+                <tr class="text-[10px] text-slate-400 uppercase border-b border-slate-700/50">
+                  <th class="px-3 py-2 text-left">着</th>
                   <th class="px-3 py-2 text-left">馬番</th>
                   <th class="px-3 py-2 text-left">馬名</th>
                   <th class="px-3 py-2 text-right">人気</th>
                   <th class="px-3 py-2 text-right">odds</th>
-                  <th class="px-3 py-2 text-right">Core edge</th>
-                  <th class="px-3 py-2 text-center">PD</th>
-                  <th class="px-3 py-2 text-center">WU</th>
+                  <th class="px-3 py-2 text-right">Edge</th>
+                  <th class="px-3 py-2 text-right">勝率</th>
+                  <th class="px-3 py-2 text-right">市場P</th>
+                  <th class="px-3 py-2 text-center">通過</th>
+                  <th class="px-3 py-2 text-right">Time</th>
+                  <th class="px-3 py-2 text-right">上3F</th>
                   <th class="px-3 py-2 text-center">判定</th>
                 </tr>
               </thead>
               <tbody>
-                <template x-for="h in selectedRace.horses || []">
-                  <tr class="border-b border-gray-800 hover:bg-gray-800/50"
-                      :class="h.status === 'VETO' ? 'bg-red-900/20' : (h.status === '候補' ? 'bg-green-900/10' : '')">
-                    <td class="px-3 py-2 font-mono" x-text="h.number"></td>
-                    <td class="px-3 py-2" x-text="h.name"></td>
-                    <td class="px-3 py-2 text-right font-mono" x-text="h.popularity"></td>
-                    <td class="px-3 py-2 text-right font-mono" x-text="h.odds"></td>
-                    <td class="px-3 py-2 text-right font-mono"
-                        :class="(h.core_edge != null && h.core_edge > 0) ? 'text-green-400' : (h.core_edge != null && h.core_edge < 0) ? 'text-red-400' : 'text-gray-400'"
-                        x-text="formatCoreEdge(h)"></td>
-                    <td class="px-3 py-2 text-center">
-                      <span class="px-1.5 py-0.5 rounded text-xs"
-                            :class="{'bg-green-900 text-green-300': h.paddock === 'G',
-                                     'bg-gray-700 text-gray-300': h.paddock === 'N',
-                                     'bg-red-900 text-red-300': h.paddock === 'B'}"
-                            x-text="h.paddock"></span>
+                <template x-for="h in (detail.horses||[]).sort((a,b)=>(a.finish_position||99)-(b.finish_position||99))" :key="h.number">
+                  <tr class="border-b border-slate-800/50 transition">
+                    <td class="px-3 py-2 font-bold" :class="{'medal-1':h.finish_position===1,'medal-2':h.finish_position===2,'medal-3':h.finish_position===3}">
+                      <span x-text="h.finish_position===1?'🥇':h.finish_position===2?'🥈':h.finish_position===3?'🥉':h.finish_position||'-'"></span>
                     </td>
+                    <td class="px-3 py-2 font-mono text-white" x-text="h.number"></td>
+                    <td class="px-3 py-2 text-white font-medium" x-text="h.name"></td>
+                    <td class="px-3 py-2 text-right font-mono" x-text="h.popularity||'-'"></td>
+                    <td class="px-3 py-2 text-right font-mono text-slate-300" x-text="h.odds?h.odds.toFixed(1):'-'"></td>
+                    <td class="px-3 py-2 text-right font-mono text-xs"
+                      :class="(h.core_edge||0)>0.001?'edge-pos':(h.core_edge||0)<-0.001?'edge-neg':'text-slate-500'"
+                      x-text="h.core_edge!=null?((h.core_edge>=0?'+':'')+h.core_edge.toFixed(3)):'-'"></td>
+                    <td class="px-3 py-2 text-right font-mono text-xs text-slate-300" x-text="h.win_prob?(h.win_prob*100).toFixed(1)+'%':'-'"></td>
+                    <td class="px-3 py-2 text-right font-mono text-xs text-slate-500" x-text="h.market_prob?(h.market_prob*100).toFixed(1)+'%':'-'"></td>
+                    <td class="px-3 py-2 text-center font-mono text-xs text-slate-400" x-text="h.corner_positions||'-'"></td>
+                    <td class="px-3 py-2 text-right font-mono text-xs text-slate-400" x-text="h.finish_time?h.finish_time.toFixed(1):'-'"></td>
+                    <td class="px-3 py-2 text-right font-mono text-xs text-slate-400" x-text="h.last_3f?h.last_3f.toFixed(1):'-'"></td>
                     <td class="px-3 py-2 text-center">
-                      <span class="px-1.5 py-0.5 rounded text-xs"
-                            :class="{'bg-green-900 text-green-300': h.warmup === 'G',
-                                     'bg-gray-700 text-gray-300': h.warmup === 'N',
-                                     'bg-red-900 text-red-300': h.warmup === 'B'}"
-                            x-text="h.warmup"></span>
+                      <span x-show="h.status==='VETO'" class="tag tag-veto">VETO</span>
+                      <span x-show="h.status==='候補'" class="tag tag-bet">候補</span>
                     </td>
-                    <td class="px-3 py-2 text-center text-xs"
-                        :class="{'text-red-400 font-bold': h.status === 'VETO',
-                                 'text-green-400': h.status === '候補'}"
-                        x-text="h.status || '-'"></td>
                   </tr>
                 </template>
               </tbody>
             </table>
           </div>
 
-          <!-- Advisory Info -->
-          <div class="p-4 border-t border-gray-700" x-show="selectedRace.advisory">
-            <h4 class="text-xs text-gray-400 mb-2">Advisory（参考・判定未使用）</h4>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
-              <div class="bg-surface p-2 rounded">
-                <div class="text-gray-400">Track Bias</div>
-                <div class="text-white" x-text="selectedRace.advisory?.track_bias?.direction || '-'"></div>
-                <div class="text-gray-500" x-text="'conf: ' + (selectedRace.advisory?.track_bias?.confidence || 0)"></div>
-              </div>
-              <div class="bg-surface p-2 rounded">
-                <div class="text-gray-400">Wind</div>
-                <div class="text-white" x-text="selectedRace.advisory?.wind?.short_reason || '-'"></div>
-                <div class="text-gray-500" x-text="'conf: ' + (selectedRace.advisory?.wind?.confidence || 0)"></div>
-              </div>
-              <div class="bg-surface p-2 rounded">
-                <div class="text-gray-400">Historical Bias</div>
-                <div class="text-white" x-text="selectedRace.advisory?.historical_bias?.short_reason || '-'"></div>
-                <div class="text-gray-500" x-text="'conf: ' + (selectedRace.advisory?.historical_bias?.confidence || 0)"></div>
-              </div>
+          <!-- Advisory -->
+          <div class="p-4 border-t border-slate-700/30" x-show="detail.advisory">
+            <div class="text-[10px] text-slate-500 uppercase tracking-wider mb-2">Advisory（参考・Gate未使用）</div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+              <template x-for="(v,k) in detail.advisory||{}" :key="k">
+                <div class="bg-slate-800/40 rounded p-2 text-xs">
+                  <span class="text-slate-400" x-text="k+': '"></span>
+                  <span class="text-slate-200" x-text="v.short_reason||v.direction||'-'"></span>
+                </div>
+              </template>
             </div>
+          </div>
+
+          <div class="p-3 text-right">
+            <button @click="detail=null" class="text-xs text-slate-400 hover:text-white">✕ 閉じる</button>
           </div>
         </div>
       </template>
-    </div>
+    </section>
 
-    <!-- Advisory Tab -->
-    <div x-show="currentTab === 'advisory'" class="fade-in">
-      <h2 class="text-lg font-semibold mb-4">Advisory モジュール</h2>
-      <p class="text-sm text-gray-400 mb-4">以下は参考情報です。Gate の判定には使用されていません。</p>
-      <div class="space-y-4">
-        <template x-for="mod in advisoryModules">
-          <div class="bg-card rounded-lg p-4 border border-gray-700">
+    <!-- ━━━ Advisory ━━━ -->
+    <section x-show="tab==='adv'" class="fade">
+      <h2 class="text-sm font-semibold text-slate-300 mb-3">Advisory モジュール <span class="text-xs text-slate-500">（Gate判定には使用していません）</span></h2>
+      <div class="space-y-3">
+        <template x-for="m in advisoryMods" :key="m.name">
+          <div class="glass rounded-lg p-4">
             <div class="flex items-center justify-between mb-2">
-              <h3 class="font-semibold text-white" x-text="mod.name"></h3>
-              <span class="text-xs px-2 py-1 rounded"
-                    :class="{'bg-blue-900 text-blue-300': mod.status === 'active',
-                             'bg-yellow-900 text-yellow-300': mod.status === 'waiting_data',
-                             'bg-red-900 text-red-300': mod.status === 'discard_recommended'}"
-                    x-text="mod.mode + ' / ' + mod.status"></span>
+              <span class="text-sm font-semibold text-white" x-text="m.name"></span>
+              <span class="tag" :class="{
+                'bg-blue-900/60 text-blue-300': m.status==='active',
+                'bg-amber-900/60 text-amber-300': m.status==='waiting_data',
+                'bg-red-900/60 text-red-300': m.status==='discard_recommended'
+              }" x-text="m.mode+' / '+m.status"></span>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs text-gray-400">
-              <div>Gate 接続: <span class="text-gray-300" x-text="mod.gate_connected ? 'Yes' : 'No'"></span></div>
-              <div>Integrated 条件: <span class="text-gray-300" x-text="mod.integrated_criteria"></span></div>
-              <div>Discard 条件: <span class="text-gray-300" x-text="mod.discard_criteria"></span></div>
+            <div class="text-xs text-slate-400 space-y-1">
+              <div>Gate接続: <span class="text-slate-300" x-text="m.gate_connected?'Yes':'No'"></span></div>
+              <div>昇格条件: <span class="text-slate-300" x-text="m.integrated_criteria"></span></div>
+              <div>破棄条件: <span class="text-slate-300" x-text="m.discard_criteria"></span></div>
             </div>
           </div>
         </template>
       </div>
-    </div>
+    </section>
 
-    <!-- Analytics Tab -->
-    <div x-show="currentTab === 'analytics'" class="fade-in">
-      <h2 class="text-lg font-semibold mb-4">成績分析</h2>
-      <div class="bg-card rounded-lg p-6 border border-gray-700 text-center text-gray-400">
-        <p>実データ蓄積後に有効化されます</p>
-        <p class="text-xs mt-2">ROI推移 / 理由コード別成績 / Core単独 vs 統合後比較 / no-bet 有効性</p>
+    <!-- ━━━ 分析 ━━━ -->
+    <section x-show="tab==='stats'" class="fade">
+      <div class="glass rounded-lg p-6 text-center">
+        <div class="text-slate-400 text-sm">成績分析は実運用データ蓄積後に有効化されます</div>
+        <div class="text-xs text-slate-500 mt-2">ROI推移 / 理由コード別成績 / Core単独 vs 統合後比較 / no-bet 有効性</div>
       </div>
-    </div>
+    </section>
 
   </main>
 
-  <!-- Footer -->
-  <footer class="border-t border-gray-800 px-6 py-3 text-center text-xs text-gray-500">
-    川崎競馬AI v0.2.0 — Advisory モジュール: Track Bias / Historical Bias / Wind
+  <!-- フッター -->
+  <footer class="text-center text-[10px] text-slate-600 py-4 mt-8">
+    川崎競馬AI v0.2 — <span x-text="(summary.total_races||0)+' races loaded'"></span>
   </footer>
-
 </div>
 
 <script>
-function dashboard() {
-  const API = window.location.origin + '/api';
+function app() {
+  const API = location.origin + '/api';
   return {
-    currentTab: 'dashboard',
-    tabNames: { dashboard: 'ダッシュボード', races: 'レース', advisory: 'Advisory', analytics: '成績分析' },
-    loading: false,
-    apiError: '',
-    lastUpdated: '',
+    tab: 'dash',
+    tabs: [
+      {id:'dash',label:'ダッシュボード'},
+      {id:'races',label:'レース'},
+      {id:'adv',label:'Advisory'},
+      {id:'stats',label:'分析'},
+    ],
     summary: {},
     races: [],
-    selectedRace: null,
-    advisoryModules: [],
+    detail: null,
+    advisoryMods: [],
+    raceFilter: '',
+    racePage: 0,
+    pageSize: 20,
+
+    get filteredRaces() {
+      if (!this.raceFilter) return this.races;
+      const q = this.raceFilter.toLowerCase();
+      return this.races.filter(r =>
+        (r.distance+'').includes(q) ||
+        (r.grade||'').toLowerCase().includes(q) ||
+        (r.condition||'').includes(q) ||
+        (r.short_reason||'').includes(q)
+      );
+    },
 
     async init() { await this.refresh(); },
 
-    formatCoreEdge(h) {
-      if (h == null || h.core_edge == null || h.core_edge === undefined) return '-';
-      const v = Number(h.core_edge);
-      if (Number.isNaN(v)) return '-';
-      return (v >= 0 ? '+' : '') + v.toFixed(3);
-    },
-
     async refresh() {
-      this.loading = true;
-      this.apiError = '';
       try {
-        const [sumRes, raceRes, advRes] = await Promise.all([
-          fetch(API + '/dashboard/summary'),
-          fetch(API + '/races/'),
-          fetch(API + '/advisory/summary'),
+        const [s, r, a] = await Promise.all([
+          fetch(API+'/dashboard/summary').then(r=>r.json()),
+          fetch(API+'/races/').then(r=>r.json()),
+          fetch(API+'/advisory/summary').then(r=>r.json()),
         ]);
-        if (!sumRes.ok || !raceRes.ok || !advRes.ok) {
-          this.apiError = 'API error: ' + [sumRes.status, raceRes.status, advRes.status].join('/');
-          this.loading = false;
-          return;
-        }
-        this.summary = await sumRes.json();
-        const raceData = await raceRes.json();
-        this.races = raceData.races || [];
-        const advData = await advRes.json();
-        this.advisoryModules = advData.modules || [];
-        this.lastUpdated = new Date().toLocaleTimeString('ja-JP');
-      } catch (e) {
-        console.error('API error:', e);
-        this.apiError = '通信エラー（コンソールを確認）';
-      }
-      this.loading = false;
+        this.summary = s;
+        this.races = (r.races||[]).sort((a,b) => {
+          if (a.race_date !== b.race_date) return a.race_date < b.race_date ? -1 : 1;
+          return a.race_number - b.race_number;
+        });
+        this.advisoryMods = a.modules || [];
+      } catch(e) { console.error(e); }
     },
 
-    async selectRace(raceId) {
+    async selectRace(id) {
       try {
-        const res = await fetch(API + '/races/' + encodeURIComponent(raceId));
-        if (!res.ok) {
-          this.apiError = 'レース詳細 ' + res.status;
-          return;
-        }
-        this.selectedRace = await res.json();
-        this.apiError = '';
-      } catch (e) {
-        console.error('Race detail error:', e);
-        this.apiError = 'レース詳細の取得に失敗';
-      }
+        const d = await fetch(API+'/races/'+id).then(r=>r.json());
+        this.detail = d;
+        setTimeout(() => document.getElementById('race-detail')?.scrollIntoView({behavior:'smooth'}), 50);
+      } catch(e) { console.error(e); }
     },
   };
 }

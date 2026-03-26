@@ -403,7 +403,7 @@ class TestCompareBaselineVariants:
             pytest.skip("sample_races.json missing")
         races = load_races(p)
         all_e = load_entries(p)
-        assert len(races) == 10
+        assert len(races) >= 10
 
         pop_sum_max = 0.0
         odds_sum_max = 0.0

@@ -6,7 +6,11 @@
       "Edit",
       "Write",
       "Glob",
-      "Grep"
+      "Grep",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "WebFetch(domain:qiita.com)",
+      "WebFetch(domain:api.github.com)"
     ]
   }
 }

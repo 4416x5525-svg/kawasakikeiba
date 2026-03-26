@@ -201,10 +201,21 @@ def _detail_from_sample(
     res_list: list[RaceResult],
     warns: list[str],
 ) -> dict[str, object]:
+    from kawasaki_keiba.core.scoring import generate_core_predictions
+
     res_by_num = {x.horse_number: x for x in res_list}
+
+    # Core scoring（adj=0 → edge≈0、将来特徴量追加で改善）
+    try:
+        preds = generate_core_predictions(ent)
+        pred_by_num = {p.horse_number: p for p in preds}
+    except Exception:
+        pred_by_num = {}
+
     horses: list[dict[str, object]] = []
     for e in sorted(ent, key=lambda x: x.horse_number):
         rr = res_by_num.get(e.horse_number)
+        pred = pred_by_num.get(e.horse_number)
         horses.append(
             {
                 "number": e.horse_number,
@@ -212,8 +223,12 @@ def _detail_from_sample(
                 "popularity": e.popularity,
                 "odds": e.odds_win,
                 "finish_position": rr.finish_position if rr else None,
+                "finish_time": rr.finish_time if rr else None,
+                "last_3f": rr.last_3f if rr else None,
                 "corner_positions": rr.corner_positions if rr else None,
-                "core_edge": None,
+                "core_edge": round(pred.edge_win, 4) if pred else None,
+                "win_prob": round(pred.win_prob, 4) if pred else None,
+                "market_prob": round(pred.market_win_prob, 4) if pred else None,
                 "paddock": "-",
                 "warmup": "-",
                 "status": "-",
@@ -277,9 +292,11 @@ def list_races() -> dict[str, object]:
     d0 = min(r.race_date for r in races)
     return {
         "date": d0.isoformat(),
+        "total": len(races),
         "races": [
             {
                 "race_id": r.race_id,
+                "race_date": r.race_date.isoformat(),
                 "race_number": r.race_number,
                 "distance": r.distance,
                 "grade": str(r.grade),
@@ -287,12 +304,10 @@ def list_races() -> dict[str, object]:
                 "num_runners": r.num_runners,
                 "gate_decision": "no_bet",
                 "no_bet_reasons": ["sample_data"],
-                "short_reason": "実データ（ゲート未計算）",
+                "short_reason": f"{r.distance}m {r.grade} {r.num_runners}頭",
             }
             for r in sorted(races, key=lambda x: (x.race_date, x.race_number))
         ],
-        "note": "sample_races.json",
-        "load_warnings": warns,
     }
 
 
